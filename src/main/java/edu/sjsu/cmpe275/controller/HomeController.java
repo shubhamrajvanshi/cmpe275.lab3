@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.sjsu.cmpe275.dao.DaoOperationsInterface;
+import edu.sjsu.cmpe275.dao.MysqlImplementation;
 import edu.sjsu.cmpe275.model.Address;
 import edu.sjsu.cmpe275.model.Player;
 import edu.sjsu.cmpe275.model.Sponsor;
@@ -36,6 +38,9 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
+		DaoOperationsInterface mysql = new MysqlImplementation();
+		Sponsor s = mysql.getSponsor(1);
+		System.out.println(s.getId()+"-"+s.getName());
 		
 		return "home";
 	}
@@ -50,11 +55,11 @@ public class HomeController {
     private final AtomicLong pcounter = new AtomicLong();
     private final AtomicLong scounter = new AtomicLong();
 
-    @RequestMapping("/greeting")
-    public Greeting greeting(@RequestParam(value="name", defaultValue="Guest") String name) {
-        return new Greeting(counter.incrementAndGet(),
-                            String.format(template, name));
-    }
+//    @RequestMapping("/greeting")
+//    public Greeting greeting(@RequestParam(value="name", defaultValue="Guest") String name) {
+//        return new Greeting(counter.incrementAndGet(),
+//                            String.format(template, name));
+//    }
     
   //***********Player*********
     
@@ -70,7 +75,7 @@ public class HomeController {
     	System.out.println(fname);
     	System.out.println(lname);
     	System.out.println(email);
-        p1=  new Player(pcounter.incrementAndGet(), fname, lname, email);
+//        p1=  new Player(pcounter.incrementAndGet(), fname, lname, email);
         System.out.println(p1.toString());
         return p1.toString();
     }
@@ -97,7 +102,7 @@ public class HomeController {
     	System.out.println(lname);
     	System.out.println(email);
         if(p1.getId()==id){
-        		p1=  new Player(id, fname, lname, email);
+  //      		p1=  new Player(id, fname, lname, email);
         		System.out.println(p1.toString());
         		return p1.toString();
         }
@@ -124,10 +129,10 @@ public class HomeController {
     	System.out.println(name);
     	System.out.println(description);
     	
-    	a2 = new Address(street, city, state, zip);
+    //	a2 = new Address(street, city, state, zip);
     	System.out.println(a2.toString());
     	
-        s1=  new Sponsor(scounter.incrementAndGet(), name, description, a2);
+   //    s1=  new Sponsor(scounter.incrementAndGet(), name, description, a2);
         System.out.println(s1.toString());
         return s1.toString();
     }
@@ -152,11 +157,11 @@ public class HomeController {
     	System.out.println(name);
     	System.out.println(description);
     	
-    	a2 = new Address(street, city, state, zip);
+   // 	a2 = new Address(street, city, state, zip);
     	System.out.println(a2.toString());
     	
         if(s1.getId()==id){
-        		s1=  new Sponsor(id, name, description, a2);
+   //     		s1=  new Sponsor(id, name, description, a2);
         		System.out.println(s1.toString());
         		return s1.toString();
         }

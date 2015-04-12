@@ -1,5 +1,6 @@
 package edu.sjsu.cmpe275.model;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 public class Player {
@@ -12,7 +13,21 @@ public class Player {
     private Sponsor sponsor;
     private List<Player> opponents;
     
-    /**
+        
+    public Player(long id, String firstname, String lastname, String email,
+			String description, Address address, Sponsor sponsor,
+			List<Player> opponents) {
+		super();
+		this.id = id;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.description = description;
+		this.address = address;
+		this.sponsor = sponsor;
+		this.opponents = opponents;
+	}
+	/**
 	 * @return the id
 	 */
 	public long getId() {

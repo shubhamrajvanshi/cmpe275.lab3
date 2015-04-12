@@ -1,0 +1,27 @@
+drop database if exists cmpe275;
+create database cmpe275;
+use cmpe275;
+set foreign_key_checks=0;
+
+drop table if exists player,sponsor ;
+-- set foreign_key_checks=1;
+create table sponsor(id integer, name varchar(30),description varchar(100));
+
+alter table sponsor
+add primary key(id),
+add column street varchar(30),
+add column city varchar(30),
+add column state varchar(30), 
+add column zip varchar(30);
+
+drop table if exists  player;
+create table player(id integer primary key,firstname varchar(30),lastname varchar(30),
+	description varchar(100),email varchar(30), sponsorid integer, street varchar(30),
+	city varchar(30),state varchar(30),zip varchar(30),foreign key(sponsorid) references sponsor(id) on delete cascade);
+
+drop table if exists opponent;
+create table opponent (playerid integer, opponentid integer);
+
+
+
+select * from sponsor;
