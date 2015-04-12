@@ -72,8 +72,7 @@ public class HomeController {
     @RequestMapping(value="/player/{id}", method=RequestMethod.GET)
     public String getPlayer(@PathVariable long id) {
     	System.out.println(id);
-        if(p1.getId()==id)
-        	return p1.toString();
+        
         return null;
     }
     
@@ -101,9 +100,9 @@ public class HomeController {
     @RequestMapping(value="/player/{id}", method=RequestMethod.DELETE)
     public String deletePlayer(@PathVariable long id) {
     	System.out.println(id);
-        if(p1.getId()==id)
+        
         	return (p1.toString() + "deleted");
-        return null;
+
     }
     
     //***********Sponsor*********
@@ -118,8 +117,7 @@ public class HomeController {
     	System.out.println(name);
     	System.out.println(description);
     	
-    	a2 = new Address(street, city, state, zip);
-    	System.out.println(a2.toString());
+    	
     	
         s1=  new Sponsor(scounter.incrementAndGet(), name, description, a2);
         System.out.println(s1.toString());
