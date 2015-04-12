@@ -21,11 +21,19 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-<<<<<<< HEAD
-	<context:component-scan base-package="edu.sjsu.cmpe275" />
-=======
 	<context:component-scan base-package="edu.sjsu.cmpe275.controller" />
->>>>>>> origin/master
+	<context:component-scan base-package="edu.sjsu.cmpe275.dao" />
+	
+	<beans:bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<beans:property name="url" value="jdbc:mysql://localhost/cmpe275"/>
+		<beans:property name="username" value="root"/>
+    	<beans:property name="password" value="shubham"/>
+	</beans:bean>
+	
+	<!-- To instantiate dao class -->
+	<beans:bean id="mysql" class="edu.sjsu.cmpe275.dao.MysqlImplementation">
+	</beans:bean>
 	
 	
 	

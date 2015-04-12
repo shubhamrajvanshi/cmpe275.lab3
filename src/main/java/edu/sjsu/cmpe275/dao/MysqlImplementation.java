@@ -6,19 +6,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import edu.sjsu.cmpe275.model.Address;
 import edu.sjsu.cmpe275.model.Player;
 import edu.sjsu.cmpe275.model.Sponsor;
-
+@Component
 public class MysqlImplementation implements DaoOperationsInterface { 
+	@Autowired
+	private DataSource datasource ;
+	
 	Connection conn = null;
 	PreparedStatement ps ;
 	ResultSet rs ;
 	Sponsor s ;
-	public MysqlImplementation(){
+	public MysqlImplementation(DataSource datasource){
 	try {
-		Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.conn = DriverManager.getConnection("jdbc:mysql://localhost/cmpe275?user=root&password=shubham");
+	//	Class.forName("com.mysql.jdbc.Driver").newInstance(); as it is already there in servlet-context
+			this.conn = datasource.getConnection();
 		}
 		catch(Exception e){System.out.println("error in getting connection");}
 	}
@@ -84,7 +92,22 @@ public class MysqlImplementation implements DaoOperationsInterface {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+	/**
+	 * @return the datasource
+	 */
+	public DataSource getDatasource() {
+		return datasource;
+	}
+
+
+
+	/**
+	 * @param datasource the datasource to set
+	 */
+	public void setDatasource(DataSource datasource) {
+		this.datasource = datasource;
+	}
+
 
 }
 
