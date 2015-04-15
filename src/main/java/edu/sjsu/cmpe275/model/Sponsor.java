@@ -6,11 +6,13 @@ public class Sponsor {
     private String name;
     private String description;
     private Address address;
-	public Sponsor(int id2, String string, String string2) {
+    
+	public Sponsor(long id, String name, String description,Address addr) {
 		// TODO Auto-generated constructor stub
-		this.id = id2;
-		this.name=string;
-		this.description= string2;
+		this.id = id;
+		this.name=name;
+		this.description= description;
+		this.address = addr;
 	}
 	/**
 	 * @return the id

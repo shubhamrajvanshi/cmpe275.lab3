@@ -11,12 +11,12 @@ public class Player {
     private String description;
     private Address address;
     private Sponsor sponsor;
-    private List<Player> opponents;
+    private List<Integer> opponents;
     
         
     public Player(long id, String firstname, String lastname, String email,
-			String description, Address address, Sponsor sponsor,
-			List<Player> opponents) {
+			String description, Address address, Sponsor sponsor)
+    {
 		super();
 		this.id = id;
 		this.firstname = firstname;
@@ -25,7 +25,7 @@ public class Player {
 		this.description = description;
 		this.address = address;
 		this.sponsor = sponsor;
-		this.opponents = opponents;
+//		this.opponents = opponents;
 	}
 	/**
 	 * @return the id
@@ -114,13 +114,13 @@ public class Player {
 	/**
 	 * @return the opponents
 	 */
-	public List<Player> getOpponents() {
+	public List<Integer> getOpponents() {
 		return opponents;
 	}
 	/**
 	 * @param opponents the opponents to set
 	 */
-	public void setOpponents(List<Player> opponents) {
+	public void setOpponents(List<Integer> opponents) {
 		this.opponents = opponents;
 	}
 	
