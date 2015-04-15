@@ -19,6 +19,11 @@ public interface DaoOperationsInterface {
 	public Address getAddress(long id, String type );
 	public boolean setAddress(Address a);
 	public List<Integer> getOpponent(long id);
+	public boolean isOpponent(long id1, long id2);
 	public boolean setOpponent(long id1, long id2);
+	// DAO delete functions
+	public boolean deletePlayer(long id);
+	public boolean deleteSponsor(long id);
+	public boolean deleteOpponent(long id);
 
 }

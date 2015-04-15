@@ -297,6 +297,87 @@ public class MysqlImplementation implements DaoOperationsInterface {
 		return false;
 	}
 
+	@Override
+	public boolean deletePlayer(long id) {
+		// TODO Auto-generated method stub
+		
+		try {
+			conn= datasource.getConnection();
+			ps =conn.prepareStatement("Delete from player where id=?");
+			ps.setInt(1, (int)id);
+		    if(   ps.executeUpdate()>0)
+		    {	
+		    	ps.close();
+		    	return true;
+		    }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteSponsor(long id) {
+		// TODO Auto-generated method stub
+		try {
+			conn= datasource.getConnection();
+			ps =conn.prepareStatement("Delete from sponsor where id=?");
+			ps.setInt(1, (int)id);
+		    if(   ps.executeUpdate()>0)
+		    {	
+		    	ps.close();
+		    	return true;
+		    }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+
+	@Override
+	public boolean deleteOpponent(long id) {
+		// TODO Auto-generated method stub
+		try {
+			conn= datasource.getConnection();
+			ps =conn.prepareStatement("Delete from opponent where opponentid=?");
+			ps.setInt(1, (int)id);
+		    if(ps.executeUpdate()>0)
+		    {	
+		    	ps.close();
+		    	return true;
+		    }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isOpponent(long id1, long id2) {
+		// TODO Auto-generated method stub
+		try {
+			conn= datasource.getConnection();
+			ps =conn.prepareStatement("Select * from opponent where playerid=? and opponentid=?");
+			ps.setInt(1, (int)id1);
+			ps.setInt(2,(int)id2);
+			rs = ps.executeQuery();
+			if(rs.next())
+		    {	
+		    	ps.close();
+		    	return true;
+		    }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	
 	
 

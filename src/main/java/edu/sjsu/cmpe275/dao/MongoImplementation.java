@@ -74,6 +74,24 @@ public class MongoImplementation implements DaoOperationsInterface{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean deletePlayer(long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteSponsor(long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteOpponent(long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 			
 	

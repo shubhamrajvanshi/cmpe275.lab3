@@ -6,6 +6,8 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+
 
 
 //import org.springframework.web.bind.annotation.RestController;
@@ -31,15 +35,11 @@ import edu.sjsu.cmpe275.model.Sponsor;
 
 @Controller
 public class HomeController {
-	//Counters for player n sponsor id
-//	private final AtomicLong counter = new AtomicLong();
-//  private final AtomicLong pcounter = new AtomicLong();
-//  private final AtomicLong scounter = new AtomicLong();
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	@Autowired
 	DaoOperationsInterface mysqlImplementation;
 	
-	Player p1;
+	Player p1,p2;
 	Sponsor s1,s2;
 	Address a1;
 	
@@ -48,6 +48,7 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 	return "home";	
 		}
+	
   //Create a player
   @RequestMapping(value="/player", method=RequestMethod.POST)
   @ResponseBody
@@ -71,6 +72,7 @@ public class HomeController {
       return null;
  	}
 
+  // Find a player
   @RequestMapping(value="/player/{id}", method=RequestMethod.GET)
   @ResponseBody
   public Player getPlayer(@PathVariable long id) {
@@ -81,16 +83,7 @@ public class HomeController {
       return null;
   }
   
-  //get a player
-  @RequestMapping(value="/cmpe275/{id}", method=RequestMethod.GET)
-  public String getcPlayer(@PathVariable long id) {
-  	System.out.println(id);
-  	p1=mysqlImplementation.getPlayer(id);
-      if(p1.getId()==id)
-      	return p1.toString();
-      return null;
-  }
-  
+    
   //update a player
   @RequestMapping(value="/player/{id}", method=RequestMethod.POST)
   public String updatePlayer(@PathVariable long id,
@@ -111,12 +104,18 @@ public class HomeController {
   	    }
  
 
-  //delete a sponsor
+  //delete a player
   @RequestMapping(value="/player/{id}", method=RequestMethod.DELETE)
-  public String deletePlayer(@PathVariable long id) {
-  	System.out.println(id);
-      if(p1.getId()==id)
-      	return (p1.toString() + "deleted");
+  @ResponseBody
+  public ResponseEntity<String> deletePlayer(@PathVariable long id) {
+  	System.out.println("Deleting "+id);
+  	p1= mysqlImplementation.getPlayer(id);
+      if(p1.getId()==0)
+      	return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+      else if(mysqlImplementation.deletePlayer(p1.getId()))
+      	{
+    	    return new ResponseEntity(p1, HttpStatus.OK);
+      	}
       return null;
   }
   
@@ -188,12 +187,26 @@ public class HomeController {
   	}	
   return "Opponent Added";
   }
+  
   //delete opponent
-//  @RequestMapping(value="opponents/{id1}/{id2}", method= RequestMethod.DELETE)
-//  public String deleteOpponent(@PathVariable long id2){
-//		
-//  	return "Opponent deleted";
-//  	
-//  }
+  @RequestMapping(value="opponents/{id1}/{id2}", method= RequestMethod.DELETE)
+  @ResponseBody
+  public ResponseEntity<String> deleteOpponent(@PathVariable(value="id1") long id1,
+		  				@PathVariable(value="id2") long id2){
+	  p1 = mysqlImplementation.getPlayer(id1);
+	  p2 = mysqlImplementation.getPlayer(id2);
+	  if((p1.getId()==0) || (p2.getId()==0)) {
+		  return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+	  }
+	  else if(!mysqlImplementation.isOpponent(id1,id2))
+	  {
+		  return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+	  }
+	  else{
+		  mysqlImplementation.deleteOpponent(id2);
+		  return new ResponseEntity<String>("Opponent Deleted",HttpStatus.OK);
+	  }
+	  
+  }
   
 }
